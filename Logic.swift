@@ -6,9 +6,22 @@
 //  Copyright © 2017 Alex Zanevskiy. All rights reserved.
 //
 
-func generateRangeArray(range: Int) -> Array<Int> {
+import Foundation
+
+enum RandomNumbersError : Swift.Error {
+    case rangeLessThanCount
+    case countIsNotPositive
+    case inputGreaterThanRange
+}
+
+func generateRangeArray(from range: Int = 9) throws -> Array<Int> {
+    
+    if range <= 0 {
+        throw RandomNumbersError.countIsNotPositive
+    }
     
     var rangeArray = Array(0..<range)
+    
     for possibleDigits in 0..<range {
         rangeArray[possibleDigits] = possibleDigits
     }
@@ -16,7 +29,11 @@ func generateRangeArray(range: Int) -> Array<Int> {
 }
 
 
-func generateDigitsArray(rangeArray: Array<Int>, digits_amount: Int) -> Array<Int> {
+func generateDigitsArray(from rangeArray: [Int], digits_amount: Int = 4) throws -> Array<Int> {
+    
+    if rangeArray.count < digits_amount {
+        throw RandomNumbersError.rangeLessThanCount
+    }
     
     var rangeArray = rangeArray
     var digitsArray = Array(0..<digits_amount)
@@ -26,25 +43,28 @@ func generateDigitsArray(rangeArray: Array<Int>, digits_amount: Int) -> Array<In
         let digit = rangeArray.remove(at: Int(index))
         digitsArray[i] = digit
     }
-    print(digitsArray)
     return digitsArray
 }
 
 
-func calculateBullsAndCows(playerInput: Array<Int>, targetArray: Array<Int>) -> (bullsCount: Int, cowsCount: Int) {
+func calculateAnswer(playerInput: Array<Int>, targetArray: Array<Int>) throws -> (correctCount: Int, containingCount: Int) {
+    
+    if playerInput.count > targetArray.count {
+        throw RandomNumbersError.inputGreaterThanRange
+    }
     
     var playerInputArray = playerInput
     var digitsArray = targetArray
-    var bullsCount = 0
-    var cowsCount = 0
+    var correctCount = 0
+    var containingCount = 0
     
     for (index, playerInputNumber) in playerInputArray.enumerated() {
         
-        if digitsArray.contains(playerInputArray[index]){
-            cowsCount += 1
-        } else if playerInputArray[index] == digitsArray[index] {
-            bullsCount += 1
+        if playerInputArray[index] == digitsArray[index]{
+            correctCount += 1
+        } else if digitsArray.contains(playerInputArray[index]) {
+            containingCount += 1
         }
     }
-    return (bullsCount, cowsCount)
+    return (correctCount, containingCount)
 }
