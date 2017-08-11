@@ -12,7 +12,20 @@ enum RandomNumbersError : Swift.Error {
     case rangeLessThanCount
     case countIsNotPositive
     case inputGreaterThanRange
+    case containsDuplicates
 }
+    
+    extension RandomNumbersError: LocalizedError {
+        public var errorDescription: String? {
+            switch self {
+                case .rangeLessThanCount: return NSLocalizedString("Guessing range is too small!", comment: "")
+                case .countIsNotPositive: return NSLocalizedString("Range can't be negative number!", comment: "")
+                case .inputGreaterThanRange: return NSLocalizedString("Player input is larger than target", comment: "")
+                case .containsDuplicates: return NSLocalizedString("You've entered duplicate numbers!", comment: "")
+            }
+        }
+    }
+
 
 func generateRangeArray(from range: Int = 9) throws -> Array<Int> {
     
@@ -47,16 +60,22 @@ func generateDigitsArray(from rangeArray: [Int], digits_amount: Int = 4) throws 
 }
 
 
-func calculateAnswer(playerInput: Array<Int>, targetArray: Array<Int>) throws -> (correctCount: Int, containingCount: Int) {
-    
-    if playerInput.count > targetArray.count {
-        throw RandomNumbersError.inputGreaterThanRange
-    }
+func calculateAnswer(playerInput: Array<Int>, targetArray: Array<Int>) throws -> Any {
     
     var playerInputArray = playerInput
     var digitsArray = targetArray
     var correctCount = 0
     var containingCount = 0
+    
+    let duplicates = Array(Set(playerInput.filter({ (i: Int) in playerInput.filter({ $0 == i }).count > 1})))
+    
+    if !duplicates.isEmpty {
+        throw RandomNumbersError.containsDuplicates
+    }
+    
+    if playerInput.count > targetArray.count {
+        throw RandomNumbersError.inputGreaterThanRange
+    }
     
     for (index, playerInputNumber) in playerInputArray.enumerated() {
         
@@ -66,5 +85,10 @@ func calculateAnswer(playerInput: Array<Int>, targetArray: Array<Int>) throws ->
             containingCount += 1
         }
     }
+    
+    if correctCount == digitsArray.count {
+        return "You won"
+    }
+    
     return (correctCount, containingCount)
 }
