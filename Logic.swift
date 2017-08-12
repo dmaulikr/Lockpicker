@@ -27,7 +27,7 @@ enum RandomNumbersError : Swift.Error {
     }
 
 
-func generateRangeArray(from range: Int = 9) throws -> Array<Int> {
+func generateRangeArray(from range: Int = 10) throws -> Array<Int> {
     
     if range <= 0 {
         throw RandomNumbersError.countIsNotPositive
@@ -77,6 +77,9 @@ func calculateAnswer(playerInput: Array<Int>, targetArray: Array<Int>) throws ->
         throw RandomNumbersError.inputGreaterThanRange
     }
     
+    print("target array in logic: ", digitsArray)
+    print("player array in logic: ", playerInputArray)
+    
     for (index, playerInputNumber) in playerInputArray.enumerated() {
         
         if playerInputArray[index] == digitsArray[index]{
@@ -87,7 +90,7 @@ func calculateAnswer(playerInput: Array<Int>, targetArray: Array<Int>) throws ->
     }
     
     if correctCount == digitsArray.count {
-        return "You won"
+        return "You won!"
     }
     
     return (correctCount, containingCount)
