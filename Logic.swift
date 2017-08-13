@@ -60,7 +60,7 @@ func generateDigitsArray(from rangeArray: [Int], digits_amount: Int = 4) throws 
 }
 
 
-func calculateAnswer(playerInput: Array<Int>, targetArray: Array<Int>) throws -> Any {
+func calculateAnswer(playerInput: Array<Int>, targetArray: Array<Int>) throws -> (Int, Int) {
     
     var playerInputArray = playerInput
     var digitsArray = targetArray
@@ -87,10 +87,6 @@ func calculateAnswer(playerInput: Array<Int>, targetArray: Array<Int>) throws ->
         } else if digitsArray.contains(playerInputArray[index]) {
             containingCount += 1
         }
-    }
-    
-    if correctCount == digitsArray.count {
-        return "You won!"
     }
     
     return (correctCount, containingCount)

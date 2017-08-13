@@ -47,7 +47,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <state key="normal" title="Unlock!"/>
                                 <connections>
-                                    <action selector="guessButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="BSc-QV-Mer"/>
+                                    <action selector="guessButtonPress:" destination="BYZ-38-t0r" eventType="touchUpInside" id="noH-Ow-Qb0"/>
                                 </connections>
                             </button>
                             <view hidden="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Y4X-LU-gNO">
@@ -78,12 +78,22 @@
                                 </subviews>
                                 <color key="backgroundColor" red="0.40000000600000002" green="1" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6go-aH-Fve">
+                                <rect key="frame" x="104" y="518" width="113" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Start New Game"/>
+                                <connections>
+                                    <action selector="startNewGameButtonPress:" destination="BYZ-38-t0r" eventType="touchUpInside" id="lHY-CN-vgd"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
-                        <outlet property="correctDigitPosition" destination="d70-Z5-Ziw" id="hDw-Er-h1J"/>
-                        <outlet property="correctNumberView" destination="Y4X-LU-gNO" id="Vfr-vN-FGN"/>
+                        <outlet property="containingCountLabel" destination="kC0-DE-rpZ" id="ed8-6a-vka"/>
+                        <outlet property="containingCountView" destination="Y4X-LU-gNO" id="GAB-d6-ATc"/>
+                        <outlet property="correctCountLabel" destination="bEO-Gq-uPl" id="GNe-UN-ajc"/>
+                        <outlet property="correctCountView" destination="d70-Z5-Ziw" id="IdW-WZ-Bpv"/>
                         <outlet property="digitPicker1" destination="oYu-FN-bRh" id="ahn-fF-xXk"/>
                         <outlet property="digitPicker2" destination="vkw-2l-Izv" id="fOc-52-lzR"/>
                         <outlet property="digitPicker3" destination="iop-Le-4x8" id="nM2-Jb-nv5"/>

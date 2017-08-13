@@ -10,18 +10,33 @@ import UIKit
 
 class MainGameViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
     
-
-    //    Mark: - IBOutlets
+    //  MARK: - Constants and Variables
     
-    @IBOutlet weak var correctNumberView: UIView!
-    @IBOutlet weak var correctDigitPosition: UIView!
+    let pickerDataSize = 100_000                // Constant for nearly infinite picker
+    
+    var userDefinedDigitsCount = 4
+    var userDefinedMaxRange = 10
+    var userDefinedRangeArray = [0]
+    var generatedTargetArray = [0]
+    
+
+    //  MARK: - IBOutlets
+    
+    @IBOutlet weak var containingCountView: UIView!
+    @IBOutlet weak var correctCountView: UIView!
+
+    @IBOutlet weak var containingCountLabel: UILabel!
+    @IBOutlet weak var correctCountLabel: UILabel!
     
     @IBOutlet weak var digitPicker1: UIPickerView!
     @IBOutlet weak var digitPicker2: UIPickerView!
     @IBOutlet weak var digitPicker3: UIPickerView!
     @IBOutlet weak var digitPicker4: UIPickerView!
     
-    @IBAction func guessButton(_ sender: UIButton) {
+    @IBAction func guessButtonPress(_ sender: UIButton) {
+        
+        clearHints()
+        
         var userInputArray = [0,0,0,0]
         
         userInputArray[0] = digitPicker1.selectedRow(inComponent: 0) % userDefinedMaxRange
@@ -31,21 +46,33 @@ class MainGameViewController: UIViewController, UIPickerViewDataSource, UIPicker
         
         do {
             let guess = try calculateAnswer(playerInput: userInputArray, targetArray: generatedTargetArray)
-            print(guess)
+            
+            if guess.0 > 0 {
+                correctCountLabel.text = String(guess.0)
+                correctCountView.isHidden = false
+            }
+            
+            if guess.1 > 0 {
+                containingCountLabel.text = String(guess.1)
+                containingCountView.isHidden = false
+            }
+            
+            if guess.0 == userDefinedDigitsCount {
+                showAlert(alertTitle: "Congratulation!", alertDescription: "You won!")
+            }
+            
+        } catch let error as RandomNumbersError {
+            showAlert(alertTitle: "Error!", alertDescription: error.errorDescription)
         } catch {
-            print("error")
+            showAlert(alertTitle: "Error", alertDescription: "General Failure")
         }
     }
     
+    @IBAction func startNewGameButtonPress(_ sender: UIButton) {
+        startNewGame()
+    }
     
-    
-    let pickerDataSize = 100_000                // Constant for nearly infinite picker
-    
-    var userDefinedDigitsCount = 4
-    var userDefinedMaxRange = 10
-    var userDefinedRangeArray = [0]
-    var generatedTargetArray = [0]
-    
+    //  MARK: - Picker functions
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
@@ -64,10 +91,11 @@ class MainGameViewController: UIViewController, UIPickerViewDataSource, UIPicker
         let valueSelected = (row % userDefinedMaxRange)
     }
     
+    
+    //  MARK: - Main funcitons
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Do any additional setup after loading the view, typically from a nib.
         
         setupPicker()
         setupArrays()
@@ -103,4 +131,27 @@ class MainGameViewController: UIViewController, UIPickerViewDataSource, UIPicker
         generatedTargetArray = try! generateDigitsArray(from: generateRangeArray())
     }
     
+    func clearHints() {
+        containingCountView.isHidden = true
+        correctCountView.isHidden = true
+    }
+    
+    func startNewGame() {
+        clearHints()
+        setupPicker()
+        setupArrays()
+        showAlert(alertTitle: "New Game", alertDescription: "New keylock code is generated")
+    }
+    
+    func showAlert(alertTitle: String?, alertDescription: String?) {
+        let title = alertTitle
+        let error = alertDescription
+        let alert = UIAlertController(title: alertTitle, message: error, preferredStyle: .alert)
+        let action  = UIAlertAction(title: "OK", style: .default, handler: nil)
+        
+        alert.addAction(action)
+        
+        present(alert, animated: true, completion: nil)
+    }
+
 }
