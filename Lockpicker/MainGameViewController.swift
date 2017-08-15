@@ -28,21 +28,17 @@ class MainGameViewController: UIViewController, UIPickerViewDataSource, UIPicker
     @IBOutlet weak var containingCountLabel: UILabel!
     @IBOutlet weak var correctCountLabel: UILabel!
     
-    @IBOutlet weak var digitPicker1: UIPickerView!
-    @IBOutlet weak var digitPicker2: UIPickerView!
-    @IBOutlet weak var digitPicker3: UIPickerView!
-    @IBOutlet weak var digitPicker4: UIPickerView!
+    @IBOutlet weak var digitPickerView: UIPickerView!
     
     @IBAction func guessButtonPress(_ sender: UIButton) {
         
         clearHints()
         
-        var userInputArray = [0,0,0,0]
+        var userInputArray = Array(repeating: 0, count: userDefinedDigitsCount)
         
-        userInputArray[0] = digitPicker1.selectedRow(inComponent: 0) % userDefinedMaxRange
-        userInputArray[1] = digitPicker2.selectedRow(inComponent: 0) % userDefinedMaxRange
-        userInputArray[2] = digitPicker3.selectedRow(inComponent: 0) % userDefinedMaxRange
-        userInputArray[3] = digitPicker4.selectedRow(inComponent: 0) % userDefinedMaxRange
+        for i in 0..<userDefinedDigitsCount {
+         userInputArray[i] = digitPickerView.selectedRow(inComponent: i) % userDefinedMaxRange
+        }
         
         do {
             let guess = try calculateAnswer(playerInput: userInputArray, targetArray: generatedTargetArray)
@@ -72,10 +68,11 @@ class MainGameViewController: UIViewController, UIPickerViewDataSource, UIPicker
         startNewGame()
     }
     
+    
     //  MARK: - Picker functions
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
+        return userDefinedDigitsCount
     }
 
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
@@ -106,29 +103,17 @@ class MainGameViewController: UIViewController, UIPickerViewDataSource, UIPicker
         // Dispose of any resources that can be recreated.
     }
     
-    func setupPicker() {                        //  Should make picker generator func to provide MOAR PICKERS
+    func setupPicker() {
+        self.digitPickerView.delegate = self
         
-        self.digitPicker1.delegate = self
-        self.digitPicker2.delegate = self
-        self.digitPicker3.delegate = self
-        self.digitPicker4.delegate = self
-        
-        self.digitPicker1.dataSource = self
-        self.digitPicker2.dataSource = self
-        self.digitPicker3.dataSource = self
-        self.digitPicker4.dataSource = self
-        
-//  Setting picker position to the middle
-        
-        digitPicker1.selectRow(pickerDataSize/2, inComponent: 0, animated: false)
-        digitPicker2.selectRow(pickerDataSize/2, inComponent: 0, animated: false)
-        digitPicker3.selectRow(pickerDataSize/2, inComponent: 0, animated: false)
-        digitPicker4.selectRow(pickerDataSize/2, inComponent: 0, animated: false)
+        for i in 0..<userDefinedDigitsCount {
+        digitPickerView.selectRow(pickerDataSize/2, inComponent: i, animated: false)    //  Setting picker position to the middle
+            }
     }
     
     func setupArrays() {
-        userDefinedRangeArray = try! generateRangeArray()
-        generatedTargetArray = try! generateDigitsArray(from: generateRangeArray())
+        userDefinedRangeArray = try! generateRangeArray(from: userDefinedMaxRange)
+        generatedTargetArray = try! generateDigitsArray(from: userDefinedRangeArray, digits_amount: userDefinedDigitsCount)
     }
     
     func clearHints() {

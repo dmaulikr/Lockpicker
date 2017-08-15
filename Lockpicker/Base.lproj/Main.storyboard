@@ -21,26 +21,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <pickerView contentMode="scaleToFill" fixedFrame="YES" showsSelectionIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oYu-FN-bRh">
-                                <rect key="frame" x="52" y="180" width="48" height="220"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                            </pickerView>
-                            <pickerView contentMode="scaleToFill" fixedFrame="YES" showsSelectionIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vkw-2l-Izv">
-                                <rect key="frame" x="108" y="180" width="48" height="220"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                            </pickerView>
-                            <pickerView contentMode="scaleToFill" fixedFrame="YES" showsSelectionIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iop-Le-4x8">
-                                <rect key="frame" x="164" y="180" width="48" height="220"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                            </pickerView>
-                            <pickerView contentMode="scaleToFill" fixedFrame="YES" showsSelectionIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rxg-WH-m0i">
-                                <rect key="frame" x="220" y="180" width="48" height="220"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                            </pickerView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="soR-1q-IdF">
                                 <rect key="frame" x="121" y="420" width="78" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -86,6 +66,11 @@
                                     <action selector="startNewGameButtonPress:" destination="BYZ-38-t0r" eventType="touchUpInside" id="lHY-CN-vgd"/>
                                 </connections>
                             </button>
+                            <pickerView contentMode="scaleToFill" fixedFrame="YES" showsSelectionIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oYu-FN-bRh">
+                                <rect key="frame" x="0.0" y="185" width="320" height="220"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </pickerView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -94,10 +79,7 @@
                         <outlet property="containingCountView" destination="Y4X-LU-gNO" id="GAB-d6-ATc"/>
                         <outlet property="correctCountLabel" destination="bEO-Gq-uPl" id="GNe-UN-ajc"/>
                         <outlet property="correctCountView" destination="d70-Z5-Ziw" id="IdW-WZ-Bpv"/>
-                        <outlet property="digitPicker1" destination="oYu-FN-bRh" id="ahn-fF-xXk"/>
-                        <outlet property="digitPicker2" destination="vkw-2l-Izv" id="fOc-52-lzR"/>
-                        <outlet property="digitPicker3" destination="iop-Le-4x8" id="nM2-Jb-nv5"/>
-                        <outlet property="digitPicker4" destination="rxg-WH-m0i" id="xlC-TX-pn6"/>
+                        <outlet property="digitPickerView" destination="oYu-FN-bRh" id="DMa-A0-Gzj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
