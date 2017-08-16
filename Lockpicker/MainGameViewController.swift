@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MainGameViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
+class MainGameViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, SettingsDelegate {
     
     //  MARK: - Constants and Variables
     
@@ -18,8 +18,21 @@ class MainGameViewController: UIViewController, UIPickerViewDataSource, UIPicker
     var userDefinedMaxRange = 10
     var userDefinedRangeArray = [0]
     var generatedTargetArray = [0]
-    
+        
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if let navigationController = segue.destination as? UINavigationController, let settingsVC = navigationController.topViewController as? SettingsViewController {
+            settingsVC.delegate = self
+        }
+    }
 
+    func changeSettings(maxRange: Int, pickerCount: Int) {
+        userDefinedDigitsCount = pickerCount
+        userDefinedMaxRange = maxRange
+        digitPickerView.reloadAllComponents()
+        startNewGame()
+    }
+    
     //  MARK: - IBOutlets
     
     @IBOutlet weak var containingCountView: UIView!
@@ -93,7 +106,7 @@ class MainGameViewController: UIViewController, UIPickerViewDataSource, UIPicker
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+    
         setupPicker()
         setupArrays()
     }
@@ -138,5 +151,5 @@ class MainGameViewController: UIViewController, UIPickerViewDataSource, UIPicker
         
         present(alert, animated: true, completion: nil)
     }
-
 }
+
