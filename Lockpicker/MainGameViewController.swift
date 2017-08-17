@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MainGameViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, SettingsDelegate {
+class MainGameViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate,  SettingsDelegate {
     
     //  MARK: - Constants and Variables
     
@@ -35,6 +35,8 @@ class MainGameViewController: UIViewController, UIPickerViewDataSource, UIPicker
     
     //  MARK: - IBOutlets
     
+    
+    @IBOutlet var mainView: UIView!
     @IBOutlet weak var containingCountView: UIView!
     @IBOutlet weak var correctCountView: UIView!
 
@@ -58,12 +60,26 @@ class MainGameViewController: UIViewController, UIPickerViewDataSource, UIPicker
             
             if guess.0 > 0 {
                 correctCountLabel.text = String(guess.0)
+                correctCountView.center.x = mainView.center.x
                 correctCountView.isHidden = false
             }
             
             if guess.1 > 0 {
                 containingCountLabel.text = String(guess.1)
+                containingCountView.center.x = mainView.center.x
                 containingCountView.isHidden = false
+            }
+            
+            if guess.0 > 0 && guess.1 > 0 {
+                
+                correctCountLabel.text = String(guess.0)
+                correctCountView.center.x = mainView.center.x + correctCountView.frame.width/1.5
+                correctCountView.isHidden = false
+
+                containingCountLabel.text = String(guess.1)
+                containingCountView.center.x = mainView.center.x - containingCountView.frame.width/1.5
+                containingCountView.isHidden = false
+
             }
             
             if guess.0 == userDefinedDigitsCount {
@@ -109,6 +125,15 @@ class MainGameViewController: UIViewController, UIPickerViewDataSource, UIPicker
     
         setupPicker()
         setupArrays()
+        
+        containingCountView.layer.borderColor = UIColor.gray.cgColor
+        containingCountView.layer.borderWidth = 1.0
+        containingCountView.layer.cornerRadius = containingCountView.frame.width / 2
+        
+        correctCountView.layer.borderColor = UIColor.gray.cgColor
+        correctCountView.layer.borderWidth = 1.0
+        correctCountView.layer.cornerRadius = correctCountView.frame.width / 2
+        
     }
     
     override func didReceiveMemoryWarning() {
